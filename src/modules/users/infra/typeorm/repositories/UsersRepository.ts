@@ -12,6 +12,12 @@ export class UsersRepository implements IUsersRepository {
     this.ormRepository = getRepository(User);
   }
 
+  public async findByEmail(email: string): Promise<User | undefined> {
+    const user = this.ormRepository.findOne({ where: { email } });
+
+    return user;
+  }
+
   public async create({
     name,
     telephone,
