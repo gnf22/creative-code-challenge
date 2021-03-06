@@ -39,8 +39,6 @@ export class AuthenticateUserService {
       expiresIn,
     });
 
-    console.log(token);
-
     const authTemplate = path.resolve(__dirname, '..', 'views', 'auth.hbs');
 
     await this.mailProvider.sendMail({
