@@ -13,3 +13,5 @@ userRouter.post('/', usersController.create);
 userRouter.use(ensureAuthenticated);
 
 userRouter.get('/', usersController.index);
+
+userRouter.delete('/', usersController.destroy);

@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
 import { CreateUserService } from '@modules/users/services/CreateUserService';
-
 import { ListUsersService } from '@modules/users/services/ListUsersService';
+import { RemoveUserService } from '@modules/users/services/RemoveUserService';
 
 export class UsersController {
   async create(request: Request, response: Response): Promise<Response> {
@@ -30,5 +30,17 @@ export class UsersController {
     const users = await listUsers.execute();
 
     return response.json(users);
+  }
+
+  async destroy(request: Request, response: Response): Promise<Response> {
+    const { id } = request.user;
+
+    const removeUser = container.resolve(RemoveUserService);
+
+    await removeUser.execute({
+      id,
+    });
+
+    return response.send(200);
   }
 }
