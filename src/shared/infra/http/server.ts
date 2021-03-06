@@ -3,6 +3,7 @@ import '../../utils/module-alias';
 import express from 'express';
 
 import '@shared/infra/typeorm';
+import '@shared/container';
 
 const app = express();
 
