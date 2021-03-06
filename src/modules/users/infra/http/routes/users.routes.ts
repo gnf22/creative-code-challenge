@@ -14,4 +14,6 @@ userRouter.use(ensureAuthenticated);
 
 userRouter.get('/', usersController.index);
 
+userRouter.put('/', usersController.update);
+
 userRouter.delete('/', usersController.destroy);

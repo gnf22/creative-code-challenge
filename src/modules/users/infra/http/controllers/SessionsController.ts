@@ -14,6 +14,6 @@ export class SessionsController {
       email,
     });
 
-    return response.json(auth);
+    return response.send(auth);
   }
 }
