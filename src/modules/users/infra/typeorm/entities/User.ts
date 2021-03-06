@@ -6,6 +6,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+import { v4 as uuid } from 'uuid';
+
 export enum EthnicityRole {
   BRANCO = 'branco',
   PRETO = 'preto',
@@ -48,4 +50,14 @@ export class User {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  constructor() {
+    if (!this.id) {
+      this.id = uuid();
+    }
+
+    if (!this.ethnicity) {
+      this.ethnicity = EthnicityRole.NENHUM;
+    }
+  }
 }
