@@ -22,7 +22,7 @@ export class ListUsersService {
     const user = this.usersRepository.findById(id);
 
     if (!user) {
-      throw new AppError('User does not exist.', 404);
+      throw new AppError('You are not authenticated.', 404);
     }
 
     const users = await this.usersRepository.listAllUsers();
