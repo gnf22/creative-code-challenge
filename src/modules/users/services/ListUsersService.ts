@@ -19,7 +19,7 @@ export class ListUsersService {
   }
 
   public async execute({ id }: IRequest): Promise<User[]> {
-    const user = this.usersRepository.findById(id);
+    const user = await this.usersRepository.findById(id);
 
     if (!user) {
       throw new AppError('You are not authenticated.', 404);

@@ -26,9 +26,10 @@ export class UsersController {
   }
 
   async index(request: Request, response: Response): Promise<Response> {
+    const { id } = request.user;
     const listUsers = container.resolve(ListUsersService);
 
-    const users = await listUsers.execute();
+    const users = await listUsers.execute({ id });
 
     return response.json(users);
   }
