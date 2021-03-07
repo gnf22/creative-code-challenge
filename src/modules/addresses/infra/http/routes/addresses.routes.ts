@@ -6,12 +6,14 @@ import { AddressesController } from '../controllers/AddressesController';
 
 export const addressesRouter = Router();
 
-const addresesController = new AddressesController();
+const addressesController = new AddressesController();
 
 addressesRouter.use(ensureAuthenticated);
 
-addressesRouter.post('/', addresesController.create);
+addressesRouter.post('/', addressesController.create);
 
-addressesRouter.get('/', addresesController.index);
+addressesRouter.get('/', addressesController.index);
 
-addressesRouter.delete('/', addresesController.destroy);
+addressesRouter.put('/:id', addressesController.update);
+
+addressesRouter.delete('/:id', addressesController.destroy);

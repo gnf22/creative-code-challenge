@@ -3,7 +3,7 @@ import { inject, injectable } from 'tsyringe';
 import { IAddressesRepository } from '../repositories/IAddressesRepository';
 
 interface IRequest {
-  user_id: string;
+  id: string;
 }
 
 @injectable()
@@ -15,13 +15,13 @@ export class RemoveAddressService {
     /** */
   }
 
-  public async execute({ user_id }: IRequest): Promise<void> {
-    const address = await this.addressesRepository.findByUserId(user_id);
+  public async execute({ id }: IRequest): Promise<void> {
+    const user = await this.addressesRepository.findById(id);
 
-    if (!address) {
-      throw new AppError('User does not exist.', 404);
+    if (!user) {
+      throw new AppError('Address not found.');
     }
 
-    await this.addressesRepository.remove(address.id);
+    await this.addressesRepository.remove(user.id);
   }
 }

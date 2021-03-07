@@ -13,6 +13,12 @@ export class AddressesRepository implements IAddressesRepository {
     this.ormRepository = getRepository(Address);
   }
 
+  public async findById(id: string): Promise<Address | undefined> {
+    const address = this.ormRepository.findOne({ where: { id } });
+
+    return address;
+  }
+
   public async findByUserId(user_id: string): Promise<Address | undefined> {
     const address = this.ormRepository.findOne({ where: { user_id } });
 
@@ -45,6 +51,10 @@ export class AddressesRepository implements IAddressesRepository {
     await this.ormRepository.save(addressToSave);
 
     return addressToSave;
+  }
+
+  public async save(address: Address): Promise<Address> {
+    return this.ormRepository.save(address);
   }
 
   public async remove(id: string): Promise<void> {

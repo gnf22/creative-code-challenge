@@ -1,37 +1,34 @@
-import { inject, injectable } from 'tsyringe';
 import axios from 'axios';
-
-import { ViaCEP } from '@modules/addresses/infra/clients/ViaCEP';
+import { inject, injectable } from 'tsyringe';
 
 import { AppError } from '@shared/errors/AppError';
-import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
-import { IAddressesRepository } from '../repositories/IAddressesRepository';
+
+import { ViaCEP } from '../infra/clients/ViaCEP';
 
 import { Address } from '../infra/typeorm/entities/Address';
 
+import { IAddressesRepository } from '../repositories/IAddressesRepository';
+
 interface IRequest {
+  id: string;
   cep: string;
   number: number;
-  id: string;
 }
 
 @injectable()
-export class CreateAddressService {
+export class UpdateAddressService {
   constructor(
     @inject('AddressesRepository')
     private addressesRepository: IAddressesRepository,
-
-    @inject('UsersRepository')
-    private usersRepository: IUsersRepository,
   ) {
     /** */
   }
 
   public async execute({ cep, number, id }: IRequest): Promise<Address> {
-    const user = await this.usersRepository.findById(id);
+    const addressExists = await this.addressesRepository.findById(id);
 
-    if (!user) {
-      throw new AppError('User does not exist.', 404);
+    if (!addressExists) {
+      throw new AppError('Address not found.', 404);
     }
 
     const viaCEP = new ViaCEP(axios);
@@ -50,16 +47,15 @@ export class CreateAddressService {
       response.data,
     );
 
-    const saveAddress = await this.addressesRepository.create({
+    Object.assign(addressExists, {
       address,
       cep,
       city,
       number,
       state,
-      user_id: id,
       complement,
     });
 
-    return saveAddress;
+    return this.addressesRepository.save(addressExists);
   }
 }
