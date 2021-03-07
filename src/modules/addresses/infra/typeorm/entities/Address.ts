@@ -52,9 +52,5 @@ export class Address {
     if (!this.id) {
       this.id = uuid();
     }
-
-    if (this.complement === '') {
-      this.complement = undefined;
-    }
   }
 }

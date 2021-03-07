@@ -2,6 +2,6 @@ import { ICreateAddressDTO } from '../dtos/ICreateAddressDTO';
 
 import { Address } from '../infra/typeorm/entities/Address';
 
-export interface IUsersRepository {
+export interface IAddressesRepository {
   create(data: ICreateAddressDTO): Promise<Address>;
 }
