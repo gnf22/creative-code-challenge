@@ -31,7 +31,7 @@ export class Address {
   number: number;
 
   @Column()
-  complement: string;
+  complement?: string;
 
   @Column()
   cep: string;
@@ -51,6 +51,10 @@ export class Address {
   constructor() {
     if (!this.id) {
       this.id = uuid();
+    }
+
+    if (this.complement === '') {
+      this.complement = undefined;
     }
   }
 }
