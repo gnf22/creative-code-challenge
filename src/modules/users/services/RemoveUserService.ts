@@ -19,7 +19,7 @@ export class RemoveUserService {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
-      throw new AppError('User does not exist', 404);
+      throw new AppError('User does not exist.', 404);
     }
 
     await this.usersRepository.remove(id);

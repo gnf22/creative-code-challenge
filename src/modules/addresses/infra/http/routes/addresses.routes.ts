@@ -11,3 +11,4 @@ const addresesController = new AddressesController();
 addressesRouter.use(ensureAuthenticated);
 
 addressesRouter.post('/', addresesController.create);
+addressesRouter.get('/', addresesController.index);

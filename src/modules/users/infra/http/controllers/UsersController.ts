@@ -42,7 +42,7 @@ export class UsersController {
       id,
     });
 
-    return response.send(200);
+    return response.sendStatus(200);
   }
 
   async update(request: Request, response: Response): Promise<Response> {

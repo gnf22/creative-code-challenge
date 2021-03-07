@@ -1,8 +1,13 @@
 import { inject, injectable } from 'tsyringe';
 
+import { AppError } from '@shared/errors/AppError';
 import { IUsersRepository } from '../repositories/IUsersRepository';
 
 import { User } from '../infra/typeorm/entities/User';
+
+interface IRequest {
+  id: string;
+}
 
 @injectable()
 export class ListUsersService {
@@ -13,7 +18,13 @@ export class ListUsersService {
     /** */
   }
 
-  public async execute(): Promise<User[]> {
+  public async execute({ id }: IRequest): Promise<User[]> {
+    const user = this.usersRepository.findById(id);
+
+    if (!user) {
+      throw new AppError('User does not exist.', 404);
+    }
+
     const users = await this.usersRepository.listAllUsers();
 
     return users;

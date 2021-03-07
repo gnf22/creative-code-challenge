@@ -29,7 +29,7 @@ export class AuthenticateUserService {
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
-      throw new AppError('User does not exist', 404);
+      throw new AppError('User does not exist.', 404);
     }
 
     const { secret, expiresIn } = authConfig.jwt;

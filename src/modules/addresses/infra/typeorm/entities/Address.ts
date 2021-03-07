@@ -5,7 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   JoinColumn,
-  OneToMany,
+  ManyToOne,
 } from 'typeorm';
 
 import { User } from '@modules/users/infra/typeorm/entities/User';
@@ -20,9 +20,9 @@ export class Address {
   @Column()
   user_id: string;
 
-  @OneToMany(() => User, user => user.id)
+  @ManyToOne(() => User)
   @JoinColumn({ name: 'user_id' })
-  user: User[];
+  user: User;
 
   @Column()
   address: string;

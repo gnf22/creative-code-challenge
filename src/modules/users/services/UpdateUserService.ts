@@ -36,7 +36,7 @@ export class UpdateUserService {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
-      throw new AppError('User does not exists!', 404);
+      throw new AppError('User does not exists.', 404);
     }
 
     const emailExists = await this.usersRepository.findByEmail(email);
