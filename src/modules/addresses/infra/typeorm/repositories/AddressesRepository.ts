@@ -46,4 +46,8 @@ export class AddressesRepository implements IAddressesRepository {
 
     return addressToSave;
   }
+
+  public async remove(id: string): Promise<void> {
+    this.ormRepository.delete(id);
+  }
 }

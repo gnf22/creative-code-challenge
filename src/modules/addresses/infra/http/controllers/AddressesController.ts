@@ -4,6 +4,7 @@ import { container } from 'tsyringe';
 
 import { CreateAddressService } from '@modules/addresses/services/CreateAddressService';
 import { ListAddressesService } from '@modules/addresses/services/ListAddressesService';
+import { RemoveAddressService } from '@modules/addresses/services/RemoveAddressService';
 
 export class AddressesController {
   async create(request: Request, response: Response): Promise<Response> {
@@ -31,5 +32,17 @@ export class AddressesController {
     });
 
     return response.json(addresses);
+  }
+
+  async destroy(request: Request, response: Response): Promise<Response> {
+    const { id } = request.user;
+
+    const removeAddress = container.resolve(RemoveAddressService);
+
+    await removeAddress.execute({
+      user_id: id,
+    });
+
+    return response.sendStatus(200);
   }
 }
