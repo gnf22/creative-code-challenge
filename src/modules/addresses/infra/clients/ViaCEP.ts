@@ -1,5 +1,4 @@
-import { AppError } from '@shared/errors/AppError';
-import axios, { AxiosResponse, AxiosStatic } from 'axios';
+import { AxiosResponse, AxiosStatic } from 'axios';
 
 interface IViaCEPResponse {
   cep: string;
