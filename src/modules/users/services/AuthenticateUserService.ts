@@ -46,7 +46,7 @@ export class AuthenticateUserService {
         name: user.name,
         email: user.email,
       },
-      subject: '[Creative Cloud] Seu Token de Acesso',
+      subject: '[Creative Code] Seu Token de Acesso',
       templateData: {
         file: authTemplate,
         variables: {
