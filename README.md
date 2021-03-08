@@ -191,6 +191,7 @@ Autenticação com usuário inexistente: **STATUS: 404 NOT FOUND**
 }
 ```
 
+### Rotas Autenticadas
 Para utilizar todas as rotas abaixo (Inclusive as de Address) é necessário ter realizado a rota acima de autenticação. Segue um tutorial de como utilizar:
 1. Realize a requisição de autenticação: **POST** `http://localhost:3333/sessions
 
