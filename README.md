@@ -90,8 +90,6 @@ npm run typeorm migration:run
 ```
 
 ### Iniciando o Projeto
-1.
-
 ```bash
 #Após todo esse passo a passo, agora você pode executar o projeto.
 
