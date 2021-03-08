@@ -41,6 +41,7 @@ Este projeto utiliza as seguintes tecnologias:
 -  [Express](https://github.com/expressjs/express)
 -  [TypeORM](https://github.com/typeorm/typeorm)
 -  [Jest](https://github.com/facebook/jest)
+-  [ViaCEP](https://viacep.com.br/)
 -  [Tsyringe](https://github.com/microsoft/tsyringe)
 -  [Typescript](https://github.com/microsoft/TypeScript)
 -  [Eslint](https://github.com/eslint/eslint)
@@ -536,7 +537,12 @@ Exclusão com endereço que não existe: **STATUS: 404 NOT FOUND**
 1. Para executar os testes no projeto, siga os seguintes passos:
 ```bash
 # Execute o script de testes
+
+#Com yarn:
 yarn test
+
+#Ou com npm:
+yarn run test
 ```
 
 2. Você pode visualizar uma interface amigável com os resultados dos testes acessando coverage/lcov-report/index.html
