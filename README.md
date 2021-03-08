@@ -40,7 +40,6 @@ Este projeto utiliza as seguintes tecnologias:
 -  [NodeJS](https://github.com/nodejs/node)
 -  [Express](https://github.com/expressjs/express)
 -  [TypeORM](https://github.com/typeorm/typeorm)
--  [SwaggerUI](https://github.com/swagger-api/swagger-ui)
 -  [Jest](https://github.com/facebook/jest)
 -  [Tsyringe](https://github.com/microsoft/tsyringe)
 -  [Typescript](https://github.com/microsoft/TypeScript)
@@ -56,26 +55,19 @@ Requisitos:
   - Node.JS
   - npm ou yarn
 
-1. Clone este repositório
 ```bash
+#Clone este repositório:
 git clone https://github.com/gnf22/creative-code-challenge.git
-```
 
-2. Escolha a pasta gerada do projeto
-```bash
+#Escolha a pasta gerada do projeto:
 cd creative-code-challenge
-```
 
-3. Instale as dependências
+#Instale as dependências:
 
-&nbsp;
-Com o yarn:
-```bash
+#Com yarn:
 yarn
-```
 
-Ou com o npm
-```bash
+#Ou com npm:
 npm install
 ```
 
@@ -86,45 +78,65 @@ npm install
      alt="Creative Code" width="300">
      
 ### Gerando Migrations
-1. Após realizar as configurações acima, você deve agora rodar o comando para gerar as tabelas do banco.
-
-&nbsp;
-Com o yarn:
 ```bash
+#Após realizar as configurações acima, você deve agora rodar o comando para gerar as tabelas do banco.
+
+#Com yarn:
 yarn typeorm migration:run
-```
 
-Ou com o npm
-```bash
+#Ou com npm:
 npm run typeorm migration:run
 ```
 
 ### Iniciando o Projeto
-1. Após todo esse passo a passo, agora você pode executar o projeto.
+1.
 
-&nbsp;
-Com o yarn:
 ```bash
+#Após todo esse passo a passo, agora você pode executar o projeto.
+
+#Com o yarn:
 yarn dev:server
-```
 
-Ou com o npm
-```bash
+#Ou com o npm:
 npm run dev:server
+
+#O projeto estará rodando em:
+http://localhost:3333
 ```
-
-2. O projeto estará rodando em `http://localhost:3333`
-
-&nbsp;
-Exemplo: `localhost:333/users`
-
 
 ### Rotas da API
 ## User
 
+Model
+```ts
+enum EthnicityRole {
+  BRANCO = 'branco',
+  PRETO = 'preto',
+  AMARELO = 'amarelo',
+  PARDO = 'pardo',
+  INDIGENA = 'indígena',
+  NENHUM = 'nenhum',
+}
+
+id: string;
+
+telephone: string;
+
+email: string;
+
+age: number;
+
+weight: number;
+
+ethnicity: EthnicityRole
+
+created_at: Date;
+
+updated_at: Date
+```
 
 
-#### 1. Adicionar novo Usuário:  **POST** `http://localhost:3333/users` 
+#### 1. Adicionar usuário:  **POST** `http://localhost:3333/users` 
 Corpo da requisição:
 ```json
 {
@@ -160,7 +172,7 @@ E-mail já utilizado: **STATUS: 409 CONFLICT**
   }
 ```
 
-#### 2. Autenticação:  **POST** `http://localhost:3333/sessions` 
+#### 2. Autenticação de usuário:  **POST** `http://localhost:3333/sessions` 
 ```json
 {
 	"email": "gustavo@gmail.com",
@@ -220,7 +232,8 @@ Autenticação com token inválido ou que já venceu (Prazo de 24 horas): **STAT
 }
 ```
 
-#### 3. Alteração:  **PUT** `http://localhost:3333/users` 
+#### 3. Alteração de usuário:  **PUT** `http://localhost:3333/users` 
+Corpo da requisição
 ```json
 {
 	"name": "Guilherme",
@@ -263,8 +276,7 @@ Alterar usuário com e-mail em uso: **STATUS: 409 CONFLICT**
 }
 ```
 
-#### 4. Consulta:  **GET** `http://localhost:3333/users`
-
+#### 4. Consulta de usuários:  **GET** `http://localhost:3333/users`
 Consulta com sucesso: **STATUS: 200 OK**
 ```json
 [
@@ -312,14 +324,13 @@ Consulta com usuário que não existe: **STATUS: 404 NOT FOUND**
 }
 ```
 
-#### 3. Exclusão:  **DELETE** `http://localhost:3333/users`
-
+#### 5. Exclusão de usuário:  **DELETE** `http://localhost:3333/users`
 Exclusão com sucesso: **STATUS: 200 OK**
 ```
 No body returned for response
 ```
 
-#### 5. Exclusão com usuário que não existe: **STATUS: 404 NOT FOUND**
+Exclusão com usuário que não existe: **STATUS: 404 NOT FOUND**
 
 ```json
 {
@@ -327,6 +338,199 @@ No body returned for response
   "message": "User does not exist."
 }
 ```
+
+## Address
+
+Model
+```ts
+id: string;
+
+user_id: string;
+
+address: string;
+
+number: number;
+
+complement?: string;
+
+cep: string;
+
+city: string;
+
+state: string;
+
+created_at: Date;
+
+updated_at: Date
+```
+
+#### 1. Adicionar novo endereço:  **POST** `http://localhost:3333/addresses` 
+Corpo da requisição:
+```json
+{
+	"cep": "05001200",
+	"number": 1000
+}
+```
+
+Cadastro com sucesso: **STATUS: 200 OK**
+```json
+{
+  "id": "862cb376-c4ae-41e2-8f6d-54eefa117989",
+  "user_id": "6b029086-3dcc-40fe-8701-f9f9ba1727ba",
+  "address": "Avenida Francisco Matarazzo",
+  "number": 1000,
+  "complement": "de 1701/1702 ao fim",
+  "cep": "05001200",
+  "city": "São Paulo",
+  "state": "SP",
+  "created_at": "2021-03-08T19:39:05.614Z",
+  "updated_at": "2021-03-08T19:39:05.614Z"
+}
+```
+
+Enviar cep com número diferente de 8 dígitos: **STATUS: 422 UNPROCESSABLE ENTITY**
+```json
+{
+  "status": "error",
+  "message": "Digite um CEP com 8 dígitos."
+}
+```
+
+Enviar cep inválido: **STATUS: 422 UNPROCESSABLE ENTITY**
+```json
+{
+  "status": "error",
+  "message": "Digite um CEP Válido."
+}
+```
+
+Criar endereço com usuário inexistente: **STATUS: 404 NOT FOUND**
+```json
+{
+  "status": "error",
+  "message": "User does not exist."
+}
+```
+
+#### 2. Consultar endereços:  **GET** `http://localhost:3333/addresses`
+
+Consulta com sucesso: **STATUS: 200 OK**
+```json
+[
+  {
+    "id": "17bd3950-ee7d-4315-9242-98311b05de11",
+    "user_id": "208de6e2-fdcb-48ed-9eee-e244cd5ea035",
+    "address": "Rua do Terceiro Lago",
+    "number": 542,
+    "complement": "",
+    "cep": "04870060",
+    "city": "São Paulo",
+    "state": "SP",
+    "created_at": "2021-03-07T21:47:01.124Z",
+    "updated_at": "2021-03-07T21:47:01.124Z",
+    "user": {
+      "id": "208de6e2-fdcb-48ed-9eee-e244cd5ea035",
+      "ethnicity": "branco",
+      "name": "Boi",
+      "telephone": "11930087625",
+      "email": "gnferreira2001@gmail.com",
+      "age": 10,
+      "weight": "1.40",
+      "created_at": "2021-03-07T07:07:10.564Z",
+      "updated_at": "2021-03-07T07:07:10.564Z"
+    }
+  }
+]
+```
+
+#### 3. Alterar endereço:  **PUT** `http://localhost:3333/addresses/:id`
+
+Query params
+`http://localhost:3333/addresses/bebba36a-c565-44ae-941f-4727ea91cda4`
+
+Corpo da requisição:
+```json
+{
+	"cep": "05001200",
+	"number": 1000
+}
+```
+
+```json
+{
+  "id": "862cb376-c4ae-41e2-8f6d-54eefa117989",
+  "user_id": "6b029086-3dcc-40fe-8701-f9f9ba1727ba",
+  "address": "Avenida Francisco Matarazzo",
+  "number": 1000,
+  "complement": "de 1701/1702 ao fim",
+  "cep": "05001200",
+  "city": "São Paulo",
+  "state": "SP",
+  "created_at": "2021-03-08T19:39:05.614Z",
+  "updated_at": "2021-03-08T19:39:05.614Z"
+}
+```
+
+Alterado com sucesso: **STATUS: 200 OK**
+```json
+{
+  "id": "862cb376-c4ae-41e2-8f6d-54eefa117989",
+  "user_id": "6b029086-3dcc-40fe-8701-f9f9ba1727ba",
+  "address": "Avenida Francisco Matarazzo",
+  "number": 1000,
+  "complement": "de 1701/1702 ao fim",
+  "cep": "05001200",
+  "city": "São Paulo",
+  "state": "SP",
+  "created_at": "2021-03-08T19:39:05.614Z",
+  "updated_at": "2021-03-08T19:39:05.614Z"
+}
+```
+
+Enviar cep com número diferente de 8 dígitos: **STATUS: 422 UNPROCESSABLE ENTITY**
+```json
+{
+  "status": "error",
+  "message": "Digite um CEP com 8 dígitos."
+}
+```
+
+Enviar cep inválido: **STATUS: 422 UNPROCESSABLE ENTITY**
+```json
+{
+  "status": "error",
+  "message": "Digite um CEP Válido."
+}
+```
+
+Alterar endereço com endereço inexistente: **STATUS: 404 NOT FOUND**
+```json
+{
+  "status": "error",
+  "message": "Address not found."
+}
+```
+
+#### 4. Excluir endereço:  **DELETE** `http://localhost:3333/addresses/:id`
+
+Query params
+`http://localhost:3333/addresses/bebba36a-c565-44ae-941f-4727ea91cda4`
+
+Exclusão com sucesso: **STATUS: 200 OK**
+```
+No body returned for response
+```
+
+Exclusão com endereço que não existe: **STATUS: 404 NOT FOUND**
+
+```json
+{
+  "status": "error",
+  "message": "Address not found."
+}
+```
+
 
 ## Executando testes
 1. Para executar os testes no projeto, siga os seguintes passos:
