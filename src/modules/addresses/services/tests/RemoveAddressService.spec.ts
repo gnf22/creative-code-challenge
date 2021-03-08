@@ -45,25 +45,6 @@ describe('RemoveAddress', () => {
   });
 
   it('should not be able to remove a address from a non-existing address', async () => {
-    const user = await fakeUsersRepository.create({
-      name: 'Gustavo',
-      age: 20,
-      email: 'test@test.com',
-      telephone: '123123',
-      ethnicity: EthnicityRole.BRANCO,
-      weight: 1.7,
-    });
-
-    await fakeAddressesRepository.create({
-      address: 'Praça da Sé',
-      cep: '01001000',
-      city: 'São Paulo',
-      state: 'SP',
-      number: 743,
-      complement: 'lado ímpar',
-      user_id: user.id,
-    });
-
     await expect(
       removeAddress.execute({
         id: 'non-existing-id',
