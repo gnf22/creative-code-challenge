@@ -42,6 +42,8 @@ Este projeto utiliza as seguintes tecnologias:
 -  [TypeORM](https://github.com/typeorm/typeorm)
 -  [Jest](https://github.com/facebook/jest)
 -  [ViaCEP](https://viacep.com.br/)
+-  [Ethereal](https://ethereal.email/)
+-  [NodeMailer](https://github.com/nodemailer/nodemailer)
 -  [Tsyringe](https://github.com/microsoft/tsyringe)
 -  [Typescript](https://github.com/microsoft/TypeScript)
 -  [Eslint](https://github.com/eslint/eslint)
